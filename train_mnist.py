@@ -103,7 +103,7 @@ def ld_mnist(batch_size=128, transform=None,shuffle=True):
 
 def main(_):
     # Load training and test data
-    data = ld_mnist()
+    data = ld_mnist(512)
 
     # Instantiate model, loss, and optimizer for training
     net = PyNet(in_channels=1)
