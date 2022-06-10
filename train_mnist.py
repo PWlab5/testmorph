@@ -30,7 +30,7 @@ cwd = os.getcwd()
 class PyNet(nn.Module):
     """CNN architecture. This is the same MNIST model from pytorch/examples/mnist repository"""
 
-    def __init__(self, in_channels=1):
+    """def __init__(self, in_channels=1):
         super(PyNet, self).__init__()
         self.conv1 = nn.Conv2d(in_channels, 32, 3, 1)
         self.conv2 = nn.Conv2d(32, 64, 3, 1)
@@ -52,7 +52,23 @@ class PyNet(nn.Module):
         x = self.dropout2(x)
         x = self.fc2(x)
         output = F.log_softmax(x, dim=1)
-        return output
+        return output"""
+    def __init__(self):
+        super(PyNet, self).__init__()
+        self.conv1 = nn.Conv2d(1, 10, kernel_size=5)
+        self.conv2 = nn.Conv2d(10, 20, kernel_size=5)
+        self.conv2_drop = nn.Dropout2d(p=0.15)
+        self.fc1 = nn.Linear(320, 20)
+        self.fc2 = nn.Linear(20, 10)
+
+    def forward(self, x):
+        x = F.relu(F.max_pool2d(self.conv1(x), 2))
+        x = F.relu(F.max_pool2d(self.conv2_drop(self.conv2(x)), 2))
+        x = x.view(-1, 320)
+        x = F.relu(self.fc1(x))
+        x = F.dropout(x, training=self.training)
+        x = self.fc2(x)
+        return F.log_softmax(x)
 
 
 def ld_mnist(batch_size=128, transform=None,shuffle=True):
