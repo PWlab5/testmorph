@@ -113,7 +113,8 @@ def main(_):
         net = net.cuda()
     loss_fn = torch.nn.CrossEntropyLoss(reduction="mean")
     
-    optimizer = optim.SGD(net.parameters(), lr=0.1, momentum=0.9)
+    optimizer = optim.Adadelta(net.parameters(), lr=lr)
+    #optimizer = optim.SGD(net.parameters(), lr=1.0, momentum=0.7)
 
     # Train model
     net.train()
