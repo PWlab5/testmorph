@@ -158,6 +158,6 @@ def main(_):
     
 
 if __name__ == "__main__":
-    flags.DEFINE_integer("nb_epochs", 7, "Number of epochs.")
+    flags.DEFINE_integer("nb_epochs", 10, "Number of epochs.")
 
     app.run(main)
