@@ -329,8 +329,8 @@ def retrain(net,data,device,epochs,batch_size=128,transform=None,adversarial=Fal
         net = net.cuda()
     loss_fn = torch.nn.CrossEntropyLoss(reduction="mean")
     if FLAGS.data == 'MNIST':
-        #optimizer = torch.optim.Adam(net.parameters(), lr=1e-3)
-        optimizer = torch.optim.Adadelta(net.parameters(), lr=1.0)
+        optimizer = torch.optim.Adam(net.parameters(), lr=1e-3)
+        #optimizer = torch.optim.Adadelta(net.parameters(), lr=1.0)
     elif FLAGS.data == 'CIFAR10':
         optimizer = torch.optim.SGD(net.parameters(), lr=0.002, momentum=0.9)
 
