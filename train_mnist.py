@@ -116,7 +116,7 @@ def main(_):
     #optimizer = optim.Adadelta(net.parameters(), lr=1.0)
     #optimizer = optim.SGD(net.parameters(), lr=1.0, momentum=0.7)
     #optimizer = torch.optim.Adam(net.parameters(), lr=1e-3)
-    optimizer = torch.optim.NAdam(net.parameters(), lr=1e-2)
+    optimizer = torch.optim.NAdam(net.parameters(), lr=1e-1)
     # Train model
     net.train()
     for epoch in range(1, FLAGS.nb_epochs + 1):
