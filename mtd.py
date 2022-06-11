@@ -332,7 +332,7 @@ def retrain(net,data,device,epochs,batch_size=128,transform=None,adversarial=Fal
         #optimizer = torch.optim.Adam(net.parameters(), lr=1e-3)
         optimizer = torch.optim.Adadelta(net.parameters(), lr=1.0)
     elif FLAGS.data == 'CIFAR10':
-        optimizer = torch.optim.SGD(net.parameters(), lr=0.001, momentum=0.9)
+        optimizer = torch.optim.SGD(net.parameters(), lr=0.002, momentum=0.9)
 
     # Train model
     net.train()
