@@ -480,7 +480,7 @@ def perturb_weights_and_retrain(master_path,data,lamda,n,p,batch_size=128,new_tr
                 if rob < old_rob:
                     old_rob=rob
                 
-                if epoch%3==0:
+                if epoch%5==0:
                     if max_rob<=max_rob2+0.3:
                         break
                     else:
