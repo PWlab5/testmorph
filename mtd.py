@@ -681,6 +681,9 @@ class Morphence():
         
         return y_pred
 
+def transferability_run(_):
+    print(transferability(FLAGS.attack,FLAGS.data,FLAGS.test_set,FLAGS.batch_size))
+
 def transferability(attack,data,size,batch_size=128):
     '''compute accuracy'''
     
