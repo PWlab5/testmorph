@@ -3,8 +3,6 @@ from mtd import transferability_run
 from sys import argv, exit, stderr
 
 
-def transferability(attack,data,size,batch_size=128):
-
 if __name__ == "__main__":
     
     #### User configuration ####
