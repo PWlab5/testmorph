@@ -682,7 +682,7 @@ class Morphence():
         return y_pred
 
 def transferability_run(_):
-    print(transferability(FLAGS.attack,FLAGS.data,FLAGS.test_set,FLAGS.batch))
+    print(transferability(FLAGS.attack,load_data(),FLAGS.test_set,FLAGS.batch))
 
 def transferability(attack,data,size,batch_size=128):
     '''compute accuracy'''
@@ -690,7 +690,7 @@ def transferability(attack,data,size,batch_size=128):
     transf=[] # list of average transferabilities for each student model
     models=[]
     for i in range(1,FLAGS.n+1):
-        models.append(load_model(os.path.join(cwd,FLAGS.data+"_models_"+''.join(str(FLAGS.lamda).split('.'))+'_'+str(FLAGS.p)),i))
+        models.append(load_model(os.path.join(cwd,FLAGS.data,FLAGS.data+"_models_"+''.join(str(FLAGS.lamda).split('.'))+'_'+str(FLAGS.n)+str("b1")),i))
     
     
     
@@ -733,6 +733,55 @@ def transferability(attack,data,size,batch_size=128):
     print('Overall transferability of MTD framework using {} attack: {}'.format(attack,np.mean(transf)))
     
     return np.mean(transf)
+"""def transferability(attack,data,size,batch_size=128):
+    '''compute accuracy'''
+    
+    transf=[] # list of average transferabilities for each student model
+    models=[]
+    for i in range(1,flag_n+1):
+        path = os.path.join(cmd,'experiments', FLAGS.data,FLAGS.data+"_models_"+''.join(str(FLAGS.lamda).split('.'))+'_'+str(FLAGS.n)+'_'+flag_models_batch)
+        models.append(load_model(path,i))
+    
+    data = load_data()
+    for i in range(len(models)):
+        if device == "cuda":
+            models[i] = models[i].cuda()
+        models[i].eval()
+        
+        print('performing {} attack on model {}'.format(attack,i+1))
+        x_adv, y_adv = perform_attack(models[i],data,size,attack=attack,model_type='student')
+        
+        transfi=[] # transferability of model i across all student models using using all adv data
+        for j in range(len(models)):
+            if j != i:
+                if device == "cuda":
+                    models[j] = models[j].cuda()
+                models[j].eval()
+                
+                tot=0 # total of adv samples on model i
+                s=0 # sum of transferable samples for model j
+                for b_i in range(0,x_adv.shape[0],batch_size):
+                    x, y = get_batch(x_adv,y_adv, b_i, batch_size)
+                    x, y = x.to(device), y.to(device)
+                    _, y_predi = models[i](x).max(1)
+                    resi = y_predi.eq(y)
+                    
+                    _, y_predj = models[j](x).max(1)
+                    resj = y_predj.eq(y)
+                    
+                    for ind in range(resi.shape[0]):
+                        if resi[ind] == False: # evasion on model i
+                            tot+=1
+                            if resj[ind] == False: # transferable to model j
+                                s+=1
+                print('Transferability of model {} to model {}: {}'.format(i+1,j+1,float(s)/tot))
+                transfi.append(float(s)/tot)
+        transf.append(np.mean(transfi))
+        print('Avergae Transferability of model {} across all models: {}'.format(i+1,np.mean(transfi)))
+        
+    print('Overall transferability of MTD framework using {} attack: {}'.format(attack,np.mean(transf)))
+    
+    return np.mean(transf)"""
 
 def test_under_attack(model,data,size,attack='CW',batch_size=128,model_type='mtd',copycat=False):
     
