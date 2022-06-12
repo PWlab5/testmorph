@@ -468,6 +468,7 @@ def perturb_weights_and_retrain(master_path,data,lamda,n,p,batch_size=128,new_tr
             epoch=0
             old_rob = robustness(model,data,1000,batch_size,attack='FGS')
             max_rob = old_rob
+            max_rob2= old_rob
             print("Robustness of student model {} before adversarial training (%) is {:.3f}".format(i+1,old_rob))
             while True:
                 epoch+=1
@@ -478,11 +479,18 @@ def perturb_weights_and_retrain(master_path,data,lamda,n,p,batch_size=128,new_tr
                     max_rob = rob
                 if rob < old_rob:
                     old_rob=rob
-                if epoch%7==0:
+                
+                if epoch%3==0:
+                    if max_rob<=max_rob2+FLAGS.retrain_minimal_correction:
+                        break
+                    else:
+                        max_rob2=max_rob
+                """if epoch%7==0:
                     print('old_rob',old_rob)
                     if rob-old_rob<1:
                         break
-                    old_rob=rob
+                    old_rob=rob"""
+                          
                 if it >= FLAGS.max_iter and rob >=max_rob:
                     break
                 
