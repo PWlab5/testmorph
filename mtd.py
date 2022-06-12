@@ -249,8 +249,8 @@ def robustness(model,data,size,batch_size=128,attack='CW',model_type='student',c
             target_model.eval()
             
         if attack in ['CW', 'FGS']:
-            if attack=='CW':
-                size=1000
+            """if attack=='CW':
+                size=1000"""
                     
             if model_type in ['student','master','mtd']:
                 if copycat==False:
