@@ -690,10 +690,10 @@ def transferability(attack,data,size,batch_size=128):
     transf=[] # list of average transferabilities for each student model
     models=[]
     for i in range(1,FLAGS.n+1):
-        models.append(load_model(os.path.join(cwd,"experiments",FLAGS.data,FLAGS.data+"_models_"+''.join(str(FLAGS.lamda).split('.'))+'_'+str(FLAGS.n)+str("_b1")),i))
+        models.append(load_model(os.path.join(cwd,"experiments",FLAGS.data,FLAGS.data+"_models_"+''.join(str(FLAGS.lamda).split('.'))+'_'+str(FLAGS.n)+str(_)+str(FLAGS.models_batch)),i))
     
     
-    
+
     for i in range(len(models)):
         if device == "cuda":
             models[i] = models[i].cuda()
